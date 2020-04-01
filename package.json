@@ -65,7 +65,7 @@
     "setup": "node ./bin/setup.js",
     "start": "npm run develop",
     "heroku-postbuild": "gatsby build",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 watc-css -s ./src",
     "build-storybook": "build-storybook"
   }
 }

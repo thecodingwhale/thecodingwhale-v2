@@ -6,6 +6,7 @@ import Helmet from 'react-helmet'
 import Hero from '../components/hero'
 import Layout from '../components/layout'
 import ArticlePreview from '../components/article-preview'
+import Logo from '../components/Logo/Logo'
 import './styles.scss'
 
 class RootIndex extends React.Component {
@@ -21,6 +22,7 @@ class RootIndex extends React.Component {
           <Hero data={author.node} />
           <div className="wrapper">
             <h2 className="section-headline">Recent articles</h2>
+            <Logo size="large" />
             <ul className="article-list">
               {posts.map(({ node }) => {
                 return (

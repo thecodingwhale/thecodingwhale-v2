@@ -1,9 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
+
+const SVGStyled = styled.svg`
+  line {
+    stroke: ${props => props.theme.global.color};
+  }
+`
 
 const variants = {
   close: () => (
-    <svg
+    <SVGStyled
       xmlns="http://www.w3.org/2000/svg"
       width="21.92"
       height="21.92"
@@ -21,7 +28,7 @@ const variants = {
           transform="translate(3.5 18.5)"
           fill="none"
           stroke="#3c4243"
-          stroke-width="1"
+          strokeWidth="1"
         />
         <line
           id="Line_2"
@@ -30,13 +37,13 @@ const variants = {
           transform="translate(18.5 3.5)"
           fill="none"
           stroke="#3c4243"
-          stroke-width="1"
+          strokeWidth="1"
         />
       </g>
-    </svg>
+    </SVGStyled>
   ),
   burger: () => (
-    <svg
+    <SVGStyled
       xmlns="http://www.w3.org/2000/svg"
       width="30"
       height="21"
@@ -50,7 +57,7 @@ const variants = {
           transform="translate(33.5 18.5) rotate(90)"
           fill="none"
           stroke="#3c4243"
-          stroke-width="1"
+          strokeWidth="1"
         />
         <line
           id="Line_3"
@@ -59,7 +66,7 @@ const variants = {
           transform="translate(33.5 28.5) rotate(90)"
           fill="none"
           stroke="#3c4243"
-          stroke-width="1"
+          strokeWidth="1"
         />
         <line
           id="Line_4"
@@ -68,10 +75,10 @@ const variants = {
           transform="translate(33.5 8.5) rotate(90)"
           fill="none"
           stroke="#3c4243"
-          stroke-width="1"
+          strokeWidth="1"
         />
       </g>
-    </svg>
+    </SVGStyled>
   ),
 }
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Template from '../Template/Template'
 import Icon from './Icon'
 
 export default {
@@ -14,11 +15,24 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
 `
-export const Icons = () => {
+export const IconsLight = () => {
   return (
-    <Wrapper>
-      <Icon type="close" />
-      <Icon type="burger" />
-    </Wrapper>
+    <Template mode="light">
+      <Wrapper>
+        <Icon type="close" />
+        <Icon type="burger" />
+      </Wrapper>
+    </Template>
+  )
+}
+
+export const IconsDark = () => {
+  return (
+    <Template mode="dark">
+      <Wrapper>
+        <Icon type="close" />
+        <Icon type="burger" />
+      </Wrapper>
+    </Template>
   )
 }

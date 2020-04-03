@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
@@ -97,12 +97,32 @@ const Title = styled.div`
   margin-right: 5px;
 `
 
-const ToggleSwitch = ({ size, title }) => {
+const ToggleSwitch = ({ className, size, title, checked, onChange }) => {
+  const [isChecked, setIsChecked] = useState(checked)
+
+  const onCheckboxChange = useCallback(
+    event => {
+      setIsChecked(event.target.checked)
+      if (onChange) {
+        onChange(event.target.checked)
+      }
+    },
+    [isChecked]
+  )
   return (
-    <Base size={size}>
+    <Base
+      {...(className && {
+        className: className,
+      })}
+      size={size}
+    >
       {title && <Title>{title}</Title>}
       <label>
-        <input type="checkbox" />
+        <input
+          onChange={onCheckboxChange}
+          type="checkbox"
+          checked={isChecked}
+        />
         <span />
       </label>
     </Base>
@@ -110,11 +130,14 @@ const ToggleSwitch = ({ size, title }) => {
 }
 
 ToggleSwitch.defaultProps = {
+  checked: false,
   size: 'medium',
 }
 
 ToggleSwitch.propTypes = {
   size: PropTypes.oneOf(['small', 'medium', 'large']).isRequired,
+  checked: PropTypes.bool.isRequired,
+  onChange: PropTypes.func,
   title: PropTypes.string,
 }
 

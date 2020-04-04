@@ -12,6 +12,10 @@ const theme = {
       backgroundColor: lightGray,
       color: darkGray,
     },
+    link: {
+      color: darkGray,
+      colorAccent: primaryBrand,
+    },
     toggle: {
       default: {
         borderColor: darkGray,
@@ -31,6 +35,10 @@ const theme = {
     global: {
       backgroundColor: darkGray,
       color: lightGray,
+    },
+    link: {
+      color: lightGray,
+      colorAccent: primaryBrand,
     },
     toggle: {
       default: {

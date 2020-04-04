@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link as GatsbyLink } from 'gatsby'
 import styled from 'styled-components'
+import ArticleTitle from '../ArticleTitle/ArticleTitle'
+import ArticleDate from '../ArticleDate/ArticleDate'
 
 const ButtonLink = styled(GatsbyLink)`
   color: ${props => props.theme.button.color};
@@ -20,46 +22,35 @@ const ButtonLink = styled(GatsbyLink)`
 `
 
 const ArticleListStyle = styled.div`
-  .title {
-    font-size: 22px;
-    font-weight: normal;
-    font-family: Roboto Slab;
-    margin-bottom: 10px;
-    line-height: 1.5;
-    a {
-      color: ${props => props.theme.link.color};
-      text-shadow: 0px 1px ${props => props.theme.link.colorAccent};
-    }
-  }
-  .date {
-    font-size: 13px;
-    font-family: Roboto Slab;
-    margin-bottom: 10px;
-  }
   .summary {
     margin-bottom: 15px;
   }
 `
 
-const ArticleList = ({ title, slug, date, summary, tags }) => (
-  <ArticleListStyle>
-    <h2 className="title">
-      <GatsbyLink to={slug}>{title}</GatsbyLink>
-    </h2>
-    <div className="date">{date}</div>
-    <div className="summary">{summary}</div>
-    {tags.length !== 0 && (
-      <div className="field is-grouped">
-        {tags.map(tag => (
-          <p class="control">
-            <ButtonLink className="button" to={tag.slug}>
-              {tag.title}
-            </ButtonLink>
-          </p>
-        ))}
-      </div>
-    )}
-  </ArticleListStyle>
-)
+const ArticleList = ({ title, slug, publishDate, metaDescription, tags }) => {
+  return (
+    <ArticleListStyle>
+      <ArticleTitle {...{ title, slug }} />
+      <ArticleDate {...{ publishDate }} />
+      <div
+        className="summary"
+        dangerouslySetInnerHTML={{
+          __html: metaDescription.childMarkdownRemark.html,
+        }}
+      />
+      {tags.length !== 0 && (
+        <div className="field is-grouped">
+          {tags.map(tag => (
+            <p class="control">
+              <ButtonLink className="button" to={tag.slug}>
+                {tag.title}
+              </ButtonLink>
+            </p>
+          ))}
+        </div>
+      )}
+    </ArticleListStyle>
+  )
+}
 
 export default ArticleList

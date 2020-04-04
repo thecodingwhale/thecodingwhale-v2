@@ -1,5 +1,6 @@
 import {
   white,
+  black,
   lightGray,
   darkGray,
   primaryBrand,
@@ -12,6 +13,7 @@ const theme = {
     global: {
       backgroundColor: lightGray,
       color: darkGray,
+      colorShadow: white,
     },
     link: {
       color: darkGray,
@@ -41,6 +43,7 @@ const theme = {
     global: {
       backgroundColor: darkGray,
       color: lightGray,
+      colorShadow: black,
     },
     link: {
       color: lightGray,

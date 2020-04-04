@@ -12,8 +12,12 @@ const GlobalStyle = createGlobalStyle`
     font-size: 13px;
     background-color: ${props => props.theme.global.backgroundColor};
     color: ${props => props.theme.global.color};
+    text-shadow: 0px 1px ${props => props.theme.global.colorShadow};
     min-height: 100%;
     transition: 0.4s;
+  }
+  strong {
+    color: ${props => props.theme.global.color};
   }
   @media only screen and (min-width: 768px) {
     body {
@@ -26,6 +30,15 @@ const GlobalStyle = createGlobalStyle`
       color: ${props => props.theme.link.colorAccent};
       opacity: .8;
     }
+  }
+
+  .content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+    font-family: Roboto Slab;
+    color: ${props => props.theme.link.color};
+    font-weight: normal
+  }
+  .content p img {
+    margin-top: 15px;
   }
 `
 const Theme = ({ mode, children }) => {

@@ -209,7 +209,7 @@ const ModalMobileMenu = ({ display, onClose }) => {
       >
         <Icon type="close" />
       </IconCloseStyles>
-      <MenuLink to="/home" activeClassName="active">
+      <MenuLink to="/" activeClassName="active">
         home
       </MenuLink>
       <MenuLink to="/about" activeClassName="active">
@@ -297,7 +297,7 @@ const Layout = ({ mode, children }) => {
                   </MenuStyles>
                 </div>
                 <DesktopMenuStyles>
-                  <DesktopMenuLink to="/home" activeClassName="active">
+                  <DesktopMenuLink to="/" activeClassName="active">
                     home
                   </DesktopMenuLink>
                   <span></span>

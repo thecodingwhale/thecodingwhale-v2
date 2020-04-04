@@ -229,11 +229,34 @@ ModalMobileMenu.propTypes = {
 
 const DesktopMenuStyles = styled.div`
   text-align: center;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+  @media screen and (min-width: 768px) {
+    margin-bottom: 65px;
+  }
   span {
     width: 40px;
     display: inline-block;
   }
 `
+
+const ContentStyles = styled.div`
+  padding-left: 20px;
+  padding-right: 20px;
+`
+
+const FooterStyles = styled.div`
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  @media screen and (min-width: 768px) {
+    height: 120px;
+  }
+`
+
 const Layout = ({ mode, children }) => {
   const [activeMode, setActiveMode] = useState(mode)
   const [displayMobileMenu, setDisplayMobileMenu] = useState(false)
@@ -246,6 +269,7 @@ const Layout = ({ mode, children }) => {
       setActiveMode('dark')
     }
   }, [])
+
   return (
     <React.Fragment>
       <Theme mode={activeMode}>
@@ -287,9 +311,12 @@ const Layout = ({ mode, children }) => {
         </Header>
         <div className="container">
           <div className="columns">
-            <div className="column is-full">{children}</div>
+            <div className="column is-full">
+              <ContentStyles>{children}</ContentStyles>
+            </div>
           </div>
         </div>
+        <FooterStyles>All Rights Reserved</FooterStyles>
       </Theme>
     </React.Fragment>
   )

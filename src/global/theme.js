@@ -4,6 +4,7 @@ import {
   darkGray,
   primaryBrand,
   secondaryBrand,
+  primaryAccent,
 } from '../components/Branding/Colors'
 
 const theme = {
@@ -15,6 +16,11 @@ const theme = {
     link: {
       color: darkGray,
       colorAccent: primaryBrand,
+    },
+    button: {
+      color: primaryAccent,
+      backgroundColor: 'transparent',
+      borderColor: primaryAccent,
     },
     toggle: {
       default: {
@@ -39,6 +45,11 @@ const theme = {
     link: {
       color: lightGray,
       colorAccent: primaryBrand,
+    },
+    button: {
+      color: primaryAccent,
+      backgroundColor: 'transparent',
+      borderColor: primaryAccent,
     },
     toggle: {
       default: {

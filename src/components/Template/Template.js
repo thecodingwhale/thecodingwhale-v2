@@ -20,6 +20,13 @@ const GlobalStyle = createGlobalStyle`
       font-size: 16px;
     }
   }
+  a {
+    color: ${props => props.theme.link.colorAccent};
+    &:hover {
+      color: ${props => props.theme.link.colorAccent};
+      opacity: .8;
+    }
+  }
 `
 const Theme = ({ mode, children }) => {
   return (

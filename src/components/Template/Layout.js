@@ -62,6 +62,7 @@ const Toggler = ({ onChange, isDarkMode }) => {
       onChange(value)
     }
   }, [])
+  console.log('isDarkMode: ', isDarkMode)
   return (
     <TogglerStyles>
       <ToggleSwitch
@@ -323,7 +324,10 @@ const Layout = ({ mode, children }) => {
 }
 
 Layout.defaultProps = {
-  mode: window.localStorage.getItem('themeMode'),
+  mode:
+    typeof window !== 'undefined'
+      ? window.localStorage.getItem('themeMode')
+      : 'dark',
 }
 
 Layout.propTypes = {

@@ -32,6 +32,9 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .content {
+    min-height: 700px;
+  }
   .content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
     font-family: Roboto Slab;
     color: ${props => props.theme.link.color};
@@ -50,12 +53,18 @@ const Theme = ({ mode, children }) => {
   )
 }
 
-if (window.localStorage.getItem('themeMode') === null) {
+if (
+  typeof window !== 'undefined' &&
+  window.localStorage.getItem('themeMode') === null
+) {
   window.localStorage.setItem('themeMode', 'dark')
 }
 
 Theme.defaultProps = {
-  mode: window.localStorage.getItem('themeMode'),
+  mode:
+    typeof window !== 'undefined'
+      ? window.localStorage.getItem('themeMode')
+      : 'dark',
 }
 
 Theme.propTypes = {

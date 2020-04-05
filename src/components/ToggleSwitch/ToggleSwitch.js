@@ -99,7 +99,6 @@ const Title = styled.div`
 
 const ToggleSwitch = ({ className, size, title, checked, onChange }) => {
   const [isChecked, setIsChecked] = useState(checked)
-
   const onCheckboxChange = useCallback(
     event => {
       setIsChecked(event.target.checked)
@@ -109,6 +108,7 @@ const ToggleSwitch = ({ className, size, title, checked, onChange }) => {
     },
     [isChecked]
   )
+  useEffect(() => setIsChecked(checked), [checked])
   return (
     <Base
       {...(className && {

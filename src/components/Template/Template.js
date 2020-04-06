@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 import { ThemeProvider, createGlobalStyle } from 'styled-components'
 import theme from '../../global/theme'
 
@@ -14,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
     color: ${props => props.theme.global.color};
     text-shadow: 0px 1px ${props => props.theme.global.colorShadow};
     min-height: 100%;
-    transition: 0.4s;
+    transition: background-color 0.4s;
   }
   strong {
     color: ${props => props.theme.global.color};
@@ -44,13 +43,21 @@ const GlobalStyle = createGlobalStyle`
     margin-top: 15px;
   }
 `
+
+const DARK_THEME = 'dark'
+const LIGHT_THEME = 'light'
+const DEFAULT_THEME = DARK_THEME
+
 const Theme = ({ mode, children }) => {
+  const setMode = typeof theme[mode] === 'undefined' ? DEFAULT_THEME : mode
   return (
     <React.Fragment>
-      <GlobalStyle theme={theme[mode]} />
-      <ThemeProvider theme={theme[mode]}>{children}</ThemeProvider>
+      <GlobalStyle theme={theme[setMode]} />
+      <ThemeProvider theme={theme[setMode]}>{children}</ThemeProvider>
     </React.Fragment>
   )
 }
 
 export default Theme
+
+export { DEFAULT_THEME, DARK_THEME, LIGHT_THEME }

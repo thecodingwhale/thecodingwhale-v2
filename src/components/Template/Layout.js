@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useMemo, useCallback, useEffect } from 'react'
 import { Link as GatsbyLink } from 'gatsby'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import localforage from 'localforage'
 import Icon from '../Icon/Icon'
 import Logo from '../Logo/Logo'
 import ToggleSwitch from '../ToggleSwitch/ToggleSwitch'
-import Theme from './Template'
+import Theme, { DEFAULT_THEME, DARK_THEME, LIGHT_THEME } from './Template'
 
 const Header = styled.div`
   .base {
@@ -62,6 +63,7 @@ const Toggler = ({ onChange, isDarkMode }) => {
       onChange(value)
     }
   }, [])
+
   return (
     <TogglerStyles>
       <ToggleSwitch
@@ -112,12 +114,12 @@ const ModalMobileMenuStyles = styled.div`
   align-items: center;
   flex-direction: column;
   stransition: 0.4s;
-  opacity: ${props => (props.display ? '0.95' : '0')};
+  opacity: ${props => (props.display === 'true' ? '0.95' : '0')};
   position: fixed;
   width: 100%;
   height: 100%;
   background-color: ${props => props.theme.global.backgroundColor};
-  z-index: ${props => (props.display ? '1' : '0')};
+  z-index: ${props => (props.display === 'true' ? '1' : '0')};
   @media screen and (min-width: 768px) {
     display: none;
   }
@@ -197,7 +199,7 @@ const DesktopMenuLink = styled(MenuLink)`
 `
 const ModalMobileMenu = ({ display, onClose }) => {
   return (
-    <ModalMobileMenuStyles display={display}>
+    <ModalMobileMenuStyles display={display.toString()}>
       <IconCloseStyles
         type="button"
         onClick={() => {
@@ -257,26 +259,32 @@ const FooterStyles = styled.div`
   }
 `
 
-const DEFAULT_THEME = 'light'
 const Layout = ({ mode, children }) => {
-  const [activeMode, setActiveMode] = useState(
-    window && (window.localStorage.getItem('theme') === null || mode === null)
-      ? DEFAULT_THEME
-      : window.localStorage.getItem('theme')
-  )
+  const [activeMode, setActiveMode] = useState(mode)
   const [displayMobileMenu, setDisplayMobileMenu] = useState(false)
-  const onTogglerChange = useCallback(
-    value => {
-      if (value) {
-        window.localStorage.setItem('theme', 'dark')
-        setActiveMode('dark')
-      } else {
-        window.localStorage.setItem('theme', 'light')
-        setActiveMode('light')
-      }
-    },
-    [activeMode]
-  )
+  const onTogglerChange = useCallback(value => {
+    if (value) {
+      localforage.setItem('theme', DARK_THEME)
+      setActiveMode(DARK_THEME)
+    } else {
+      localforage.setItem('theme', LIGHT_THEME)
+      setActiveMode(LIGHT_THEME)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (activeMode === null) {
+      localforage.getItem('theme').then(value => {
+        setActiveMode(value)
+      })
+    } else {
+      localforage.getItem('theme').then(value => {
+        if (value !== activeMode) {
+          setActiveMode(value)
+        }
+      })
+    }
+  }, [mode])
 
   return (
     <React.Fragment>
@@ -297,7 +305,7 @@ const Layout = ({ mode, children }) => {
                   <MenuStyles>
                     <Toggler
                       onChange={onTogglerChange}
-                      isDarkMode={activeMode === 'dark'}
+                      isDarkMode={activeMode === DARK_THEME}
                     />
                     <BurgerMenu
                       onClick={() => setDisplayMobileMenu(!displayMobileMenu)}
@@ -330,12 +338,33 @@ const Layout = ({ mode, children }) => {
   )
 }
 
+const initializeThemeMode = async () => {
+  try {
+    const value = await localforage.getItem('theme')
+    if (value === null) {
+      await localforage.setItem('theme', DEFAULT_THEME).then(() => {
+        Layout.defaultProps = {
+          mode: value,
+        }
+      })
+    } else {
+      Layout.defaultProps = {
+        mode: value,
+      }
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+initializeThemeMode()
+
 Layout.defaultProps = {
-  mode: window.localStorage.getItem('theme'),
+  mode: DEFAULT_THEME,
 }
 
 Layout.propTypes = {
-  mode: PropTypes.oneOf(['light', 'dark']).isRequired,
+  mode: PropTypes.oneOf([LIGHT_THEME, DARK_THEME]).isRequired,
 }
 
 export default Layout

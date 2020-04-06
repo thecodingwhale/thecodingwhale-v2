@@ -357,7 +357,7 @@ const initializeThemeMode = async () => {
   }
 }
 
-initializeThemeMode()
+// initializeThemeMode()
 
 Layout.defaultProps = {
   mode: DEFAULT_THEME,

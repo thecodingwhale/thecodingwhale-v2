@@ -303,10 +303,10 @@ const Layout = ({ mode, children }) => {
                     <Logo className="Logo__Large" size="large" />
                   </a>
                   <MenuStyles>
-                    <Toggler
+                    {/* <Toggler
                       onChange={onTogglerChange}
                       isDarkMode={activeMode === DARK_THEME}
-                    />
+                    /> */}
                     <BurgerMenu
                       onClick={() => setDisplayMobileMenu(!displayMobileMenu)}
                     />

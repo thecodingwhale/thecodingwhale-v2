@@ -48,12 +48,11 @@ const DARK_THEME = 'dark'
 const LIGHT_THEME = 'light'
 const DEFAULT_THEME = LIGHT_THEME
 
-const Theme = ({ mode, children }) => {
-  const setMode = typeof theme[mode] === 'undefined' ? DEFAULT_THEME : mode
+const Theme = ({ children }) => {
   return (
     <React.Fragment>
-      <GlobalStyle theme={theme[setMode]} />
-      <ThemeProvider theme={theme[setMode]}>{children}</ThemeProvider>
+      <GlobalStyle theme={theme[DARK_THEME]} />
+      <ThemeProvider theme={theme[DARK_THEME]}>{children}</ThemeProvider>
     </React.Fragment>
   )
 }

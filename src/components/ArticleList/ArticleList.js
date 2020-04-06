@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import ArticleTitle from '../ArticleTitle/ArticleTitle'
 import ArticleDate from '../ArticleDate/ArticleDate'
 
-const ButtonLink = styled(GatsbyLink)`
+const ButtonLink = styled.button`
   color: ${props => props.theme.button.color};
   background-color: ${props => props.theme.button.backgroundColor};
   border-color: ${props => props.theme.button.borderColor};
@@ -15,6 +15,7 @@ const ButtonLink = styled(GatsbyLink)`
   padding-right: 7px;
   font-size: 13px;
   &:hover {
+    cursor: pointer;
     color: ${props => props.theme.button.color};
     background-color: ${props => props.theme.button.backgroundColor};
     border-color: ${props => props.theme.button.borderColor};
@@ -41,7 +42,7 @@ const ArticleList = ({ title, slug, publishDate, metaDescription, tags }) => {
       {tags.length !== 0 && (
         <div className="field is-grouped">
           {tags.map(tag => (
-            <p className="control">
+            <p key={tag} className="control">
               <ButtonLink className="button" to={tag.slug}>
                 {tag.title}
               </ButtonLink>

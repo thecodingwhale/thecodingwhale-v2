@@ -14,8 +14,8 @@ class RootIndex extends React.Component {
       <Layout>
         <Helmet title={`Welcome to ${siteTitle}`} />
         {posts.map((post, index) => (
-          <React.Fragment>
-            <ArticleList {...post.node} />
+          <React.Fragment key={index}>
+            <ArticleList key={index} {...post.node} />
             {posts.length !== index + 1 && <ArticleDashedLine />}
           </React.Fragment>
         ))}

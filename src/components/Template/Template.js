@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { ThemeProvider, createGlobalStyle } from 'styled-components'
 import theme from '../../global/theme'
@@ -51,24 +51,6 @@ const Theme = ({ mode, children }) => {
       <ThemeProvider theme={theme[mode]}>{children}</ThemeProvider>
     </React.Fragment>
   )
-}
-
-if (
-  typeof window !== 'undefined' &&
-  window.localStorage.getItem('themeMode') === null
-) {
-  window.localStorage.setItem('themeMode', 'dark')
-}
-
-Theme.defaultProps = {
-  mode:
-    typeof window !== 'undefined'
-      ? window.localStorage.getItem('themeMode')
-      : 'dark',
-}
-
-Theme.propTypes = {
-  mode: PropTypes.oneOf(['light', 'dark']).isRequired,
 }
 
 export default Theme

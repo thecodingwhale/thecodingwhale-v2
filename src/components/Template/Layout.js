@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Link as GatsbyLink } from 'gatsby'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
@@ -62,7 +62,6 @@ const Toggler = ({ onChange, isDarkMode }) => {
       onChange(value)
     }
   }, [])
-  console.log('isDarkMode: ', isDarkMode)
   return (
     <TogglerStyles>
       <ToggleSwitch
@@ -153,7 +152,6 @@ const MenuLink = styled(GatsbyLink)`
       text-shadow: 0px 1px ${props => props.theme.link.color};
     }
   }
-
   &:hover {
     color: ${props => props.theme.link.colorAccent};
     text-shadow: 0px 1px ${props => props.theme.link.color};
@@ -213,7 +211,8 @@ const ModalMobileMenu = ({ display, onClose }) => {
       <MenuLink to="/" activeClassName="active">
         home
       </MenuLink>
-      <MenuLink to="/about" activeClassName="active">
+      <br />
+      <MenuLink to="/about/" activeClassName="active">
         about
       </MenuLink>
     </ModalMobileMenuStyles>
@@ -258,18 +257,26 @@ const FooterStyles = styled.div`
   }
 `
 
+const DEFAULT_THEME = 'light'
 const Layout = ({ mode, children }) => {
-  const [activeMode, setActiveMode] = useState(mode)
+  const [activeMode, setActiveMode] = useState(
+    window && (window.localStorage.getItem('theme') === null || mode === null)
+      ? DEFAULT_THEME
+      : window.localStorage.getItem('theme')
+  )
   const [displayMobileMenu, setDisplayMobileMenu] = useState(false)
-  const onTogglerChange = useCallback(value => {
-    if (value === false) {
-      window.localStorage.setItem('themeMode', 'light')
-      setActiveMode('light')
-    } else {
-      window.localStorage.setItem('themeMode', 'dark')
-      setActiveMode('dark')
-    }
-  }, [])
+  const onTogglerChange = useCallback(
+    value => {
+      if (value) {
+        window.localStorage.setItem('theme', 'dark')
+        setActiveMode('dark')
+      } else {
+        window.localStorage.setItem('theme', 'light')
+        setActiveMode('light')
+      }
+    },
+    [activeMode]
+  )
 
   return (
     <React.Fragment>
@@ -302,7 +309,7 @@ const Layout = ({ mode, children }) => {
                     home
                   </DesktopMenuLink>
                   <span></span>
-                  <DesktopMenuLink to="/about" activeClassName="active">
+                  <DesktopMenuLink to="/about/" activeClassName="active">
                     about
                   </DesktopMenuLink>
                 </DesktopMenuStyles>
@@ -324,10 +331,7 @@ const Layout = ({ mode, children }) => {
 }
 
 Layout.defaultProps = {
-  mode:
-    typeof window !== 'undefined'
-      ? window.localStorage.getItem('themeMode')
-      : 'dark',
+  mode: window.localStorage.getItem('theme'),
 }
 
 Layout.propTypes = {

@@ -41,7 +41,7 @@ const ArticleList = ({ title, slug, publishDate, metaDescription, tags }) => {
       {tags.length !== 0 && (
         <div className="field is-grouped">
           {tags.map(tag => (
-            <p class="control">
+            <p className="control">
               <ButtonLink className="button" to={tag.slug}>
                 {tag.title}
               </ButtonLink>

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import ArticleTitle from '../ArticleTitle/ArticleTitle'
 import ArticleDate from '../ArticleDate/ArticleDate'
 
-const ButtonLink = styled.button`
+const ButtonLink = styled(GatsbyLink)`
   color: ${props => props.theme.button.color};
   background-color: ${props => props.theme.button.backgroundColor};
   border-color: ${props => props.theme.button.borderColor};
@@ -43,7 +43,7 @@ const ArticleList = ({ title, slug, publishDate, metaDescription, tags }) => {
         <div className="field is-grouped">
           {tags.map(tag => (
             <p key={tag} className="control">
-              <ButtonLink className="button" to={tag.slug}>
+              <ButtonLink className="button" to={`/tag/${tag.slug}`}>
                 {tag.title}
               </ButtonLink>
             </p>

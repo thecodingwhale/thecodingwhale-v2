@@ -273,22 +273,25 @@ const Layout = ({ mode, children }) => {
   }, [])
 
   useEffect(() => {
-    if (activeMode === null) {
-      localforage.getItem('theme').then(value => {
-        setActiveMode(value)
-      })
-    } else {
-      localforage.getItem('theme').then(value => {
-        if (value !== activeMode) {
-          setActiveMode(value)
+    async function initializedThemeStorage() {
+      try {
+        const theme = await localforage.getItem('theme')
+        if (theme === null) {
+          await localforage.setItem('theme', DEFAULT_THEME)
+          setActiveMode(DEFAULT_THEME)
+        } else {
+          setActiveMode(theme)
         }
-      })
+      } catch (error) {
+        console.log('error: ', error)
+      }
     }
-  }, [mode])
+    initializedThemeStorage()
+  })
 
   return (
     <React.Fragment>
-      <Theme mode={activeMode}>
+      <Theme mode={activeMode === null ? DEFAULT_THEME : activeMode}>
         <ModalMobileMenu
           display={displayMobileMenu}
           onClose={() => setDisplayMobileMenu(!displayMobileMenu)}
@@ -303,10 +306,10 @@ const Layout = ({ mode, children }) => {
                     <Logo className="Logo__Large" size="large" />
                   </a>
                   <MenuStyles>
-                    {/* <Toggler
+                    <Toggler
                       onChange={onTogglerChange}
                       isDarkMode={activeMode === DARK_THEME}
-                    /> */}
+                    />
                     <BurgerMenu
                       onClick={() => setDisplayMobileMenu(!displayMobileMenu)}
                     />
@@ -338,29 +341,8 @@ const Layout = ({ mode, children }) => {
   )
 }
 
-const initializeThemeMode = async () => {
-  try {
-    const value = await localforage.getItem('theme')
-    if (value === null) {
-      await localforage.setItem('theme', DEFAULT_THEME).then(() => {
-        Layout.defaultProps = {
-          mode: value,
-        }
-      })
-    } else {
-      Layout.defaultProps = {
-        mode: value,
-      }
-    }
-  } catch (err) {
-    console.log(err)
-  }
-}
-
-initializeThemeMode()
-
 Layout.defaultProps = {
-  mode: DEFAULT_THEME,
+  mode: null,
 }
 
 Layout.propTypes = {

@@ -18,6 +18,7 @@ if (!spaceId || !accessToken) {
 
 module.exports = {
   siteMetadata: {
+    url: 'https://thecodingwhale.com',
     title: 'thecodingwhale.com',
   },
   pathPrefix: '/gatsby-contentful-starter',
@@ -31,6 +32,24 @@ module.exports = {
     {
       resolve: 'gatsby-source-contentful',
       options: contentfulConfig,
+    },
+    {
+      resolve: `gatsby-plugin-disqus`,
+      options: {
+        shortname: `thecodingwhale`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: 'UA-50243260-1',
+        head: true,
+        exclude: ['/preview/**'],
+        pageTransitionDelay: 0,
+        sampleRate: 5,
+        siteSpeedSampleRate: 10,
+        cookieDomain: 'thecodingwhale.com',
+      },
     },
   ],
 }

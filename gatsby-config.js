@@ -39,5 +39,17 @@ module.exports = {
         shortname: `thecodingwhale`,
       },
     },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: 'UA-50243260-1',
+        head: true,
+        exclude: ['/preview/**'],
+        pageTransitionDelay: 0,
+        sampleRate: 5,
+        siteSpeedSampleRate: 10,
+        cookieDomain: 'thecodingwhale.com',
+      },
+    },
   ],
 }

@@ -1,6 +1,15 @@
 import React from 'react'
 import { ThemeProvider, createGlobalStyle } from 'styled-components'
 import theme from '../../global/theme'
+import {
+  white,
+  black,
+  lightGray,
+  darkGray,
+  primaryBrand,
+  secondaryBrand,
+  primaryAccent,
+} from '../../components/Branding/Colors'
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -23,14 +32,16 @@ const GlobalStyle = createGlobalStyle`
       font-size: 16px;
     }
   }
-  a {
-    color: ${props => props.theme.link.colorAccent};
+  a:not(.button) {
+    padding-left: 2px;
+    padding-right: 2px;
+    color: ${props => props.theme.global.color};
+    text-shadow: 0px 1px ${props => props.theme.link.colorAccent};
     &:hover {
-      color: ${props => props.theme.link.colorAccent};
+      color: ${props => props.theme.global.color};
       opacity: .8;
     }
   }
-
   .content {
     min-height: 700px;
   }
@@ -41,6 +52,14 @@ const GlobalStyle = createGlobalStyle`
   }
   .content p img {
     margin-top: 15px;
+  }
+  pre, code {
+    background-color: ${secondaryBrand};
+    color: ${lightGray};
+    text-shadow: 0px 1px ${black};
+  }
+  p > img {
+    display: block;
   }
 `
 

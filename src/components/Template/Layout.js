@@ -301,10 +301,10 @@ const Layout = ({ mode, children }) => {
             <div className="columns">
               <div className="column is-full">
                 <div className="base">
-                  <a className="brand">
+                  <GatsbyLink to="/" className="brand">
                     <Logo className="Logo__Medium" size="medium" />
                     <Logo className="Logo__Large" size="large" />
-                  </a>
+                  </GatsbyLink>
                   <MenuStyles>
                     <Toggler
                       onChange={onTogglerChange}

@@ -7,7 +7,7 @@ import ArticleTitle from '../components/ArticleTitle/ArticleTitle'
 class PageNotFound extends React.Component {
   render() {
     const siteTitle = get(this.props, 'data.site.siteMetadata.title')
-    const title = 'Page not found'
+    const title = 'Sorry, page not found.'
 
     return (
       <Layout>

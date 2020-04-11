@@ -47,5 +47,12 @@ module.exports = {
         shortname: `thecodingwhale`,
       },
     },
+    {
+      resolve: `gatsby-styled-components-dark-mode`,
+      options: {
+        light: require(`./src/global/lightTheme.js`),
+        dark: require(`./src/global/darkTheme.js`),
+      },
+    },
   ],
 }

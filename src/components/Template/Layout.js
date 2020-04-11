@@ -1,8 +1,9 @@
-import React, { useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useContext } from 'react'
+import { ThemeManagerContext } from 'gatsby-styled-components-dark-mode'
 import Helmet from 'react-helmet'
 import { Link as GatsbyLink } from 'gatsby'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 import Icon from '../Icon/Icon'
 import Logo from '../Logo/Logo'
 import ToggleSwitch from '../ToggleSwitch/ToggleSwitch'
@@ -260,19 +261,16 @@ const FooterStyles = styled.div`
   }
 `
 
-const Layout = ({ mode, children }) => {
-  const [activeMode, setActiveMode] = useState(mode)
+const Layout = ({ theme, children }) => {
+  const themeContext = useContext(ThemeManagerContext)
   const [displayMobileMenu, setDisplayMobileMenu] = useState(false)
-  const onTogglerChange = useCallback(value => {
-    console.log('onTogglerChange')
-  }, [])
 
   return (
     <React.Fragment>
       <Helmet
         link={[{ rel: 'shortcut icon', type: 'image/png', href: `${favicon}` }]}
       />
-      <Theme mode={activeMode}>
+      <Theme mode={theme.isDark ? DARK_THEME : LIGHT_THEME}>
         <ModalMobileMenu
           display={displayMobileMenu}
           onClose={() => setDisplayMobileMenu(!displayMobileMenu)}
@@ -288,8 +286,10 @@ const Layout = ({ mode, children }) => {
                   </GatsbyLink>
                   <MenuStyles>
                     <Toggler
-                      onChange={onTogglerChange}
-                      isDarkMode={activeMode === DARK_THEME}
+                      onChange={value => {
+                        themeContext.toggleDark(value)
+                      }}
+                      isDarkMode={theme.isDark}
                     />
                     <BurgerMenu
                       onClick={() => setDisplayMobileMenu(!displayMobileMenu)}
@@ -330,4 +330,4 @@ Layout.propTypes = {
   mode: PropTypes.oneOf([LIGHT_THEME, DARK_THEME]).isRequired,
 }
 
-export default Layout
+export default withTheme(Layout)

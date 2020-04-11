@@ -13,12 +13,14 @@ class RootIndex extends React.Component {
     return (
       <Layout>
         <Helmet title={`Welcome to ${siteTitle}`} />
-        {posts.map((post, index) => (
-          <React.Fragment key={index}>
-            <ArticleList key={index} {...post.node} />
-            {posts.length !== index + 1 && <ArticleDashedLine />}
-          </React.Fragment>
-        ))}
+        {posts.map((post, index) => {
+          return (
+            <React.Fragment key={post.node.id}>
+              <ArticleList {...post.node} />
+              {posts.length !== index + 1 && <ArticleDashedLine />}
+            </React.Fragment>
+          )
+        })}
       </Layout>
     )
   }
@@ -36,6 +38,7 @@ export const pageQuery = graphql`
     allContentfulPost(sort: { fields: [publishDate], order: DESC }) {
       edges {
         node {
+          id
           title
           slug
           publishDate(formatString: "MMMM Do, YYYY")

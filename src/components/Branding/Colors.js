@@ -7,7 +7,7 @@ const secondaryBrand = '#076265'
 const primaryAccent = '#FE72FF'
 const secondaryAccent = '#FFFD4A'
 
-export {
+module.exports = {
   white,
   black,
   lightGray,

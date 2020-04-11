@@ -23,6 +23,14 @@ module.exports = {
   },
   pathPrefix: '/gatsby-contentful-starter',
   plugins: [
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: process.env.GOOGLE_ANALYTICS,
+        head: true,
+        anonymize: true,
+      },
+    },
     'gatsby-transformer-remark',
     'gatsby-transformer-sharp',
     'gatsby-plugin-react-helmet',
@@ -37,18 +45,6 @@ module.exports = {
       resolve: `gatsby-plugin-disqus`,
       options: {
         shortname: `thecodingwhale`,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: 'UA-50243260-1',
-        head: true,
-        exclude: ['/preview/**'],
-        pageTransitionDelay: 0,
-        sampleRate: 5,
-        siteSpeedSampleRate: 10,
-        cookieDomain: 'thecodingwhale.com',
       },
     },
   ],

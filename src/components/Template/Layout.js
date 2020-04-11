@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react'
+import Helmet from 'react-helmet'
 import { Link as GatsbyLink } from 'gatsby'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
@@ -7,6 +8,7 @@ import Icon from '../Icon/Icon'
 import Logo from '../Logo/Logo'
 import ToggleSwitch from '../ToggleSwitch/ToggleSwitch'
 import Theme, { DEFAULT_THEME, DARK_THEME, LIGHT_THEME } from './Template'
+import favicon from '../../assets/images/favicon.ico'
 
 const Header = styled.div`
   .base {
@@ -291,6 +293,9 @@ const Layout = ({ mode, children }) => {
 
   return (
     <React.Fragment>
+      <Helmet
+        link={[{ rel: 'shortcut icon', type: 'image/png', href: `${favicon}` }]}
+      />
       <Theme mode={activeMode === null ? DEFAULT_THEME : activeMode}>
         <ModalMobileMenu
           display={displayMobileMenu}

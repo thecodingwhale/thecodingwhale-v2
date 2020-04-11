@@ -65,7 +65,7 @@ const GlobalStyle = createGlobalStyle`
 
 const DARK_THEME = 'dark'
 const LIGHT_THEME = 'light'
-const DEFAULT_THEME = LIGHT_THEME
+const DEFAULT_THEME = DARK_THEME
 
 const Theme = ({ mode, children }) => {
   return (

@@ -1,9 +1,8 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react'
+import React, { useState, useCallback } from 'react'
 import Helmet from 'react-helmet'
 import { Link as GatsbyLink } from 'gatsby'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import localforage from 'localforage'
 import Icon from '../Icon/Icon'
 import Logo from '../Logo/Logo'
 import ToggleSwitch from '../ToggleSwitch/ToggleSwitch'
@@ -265,38 +264,15 @@ const Layout = ({ mode, children }) => {
   const [activeMode, setActiveMode] = useState(mode)
   const [displayMobileMenu, setDisplayMobileMenu] = useState(false)
   const onTogglerChange = useCallback(value => {
-    if (value) {
-      localforage.setItem('theme', DARK_THEME)
-      setActiveMode(DARK_THEME)
-    } else {
-      localforage.setItem('theme', LIGHT_THEME)
-      setActiveMode(LIGHT_THEME)
-    }
+    console.log('onTogglerChange')
   }, [])
-
-  useEffect(() => {
-    async function initializedThemeStorage() {
-      try {
-        const theme = await localforage.getItem('theme')
-        if (theme === null) {
-          await localforage.setItem('theme', DEFAULT_THEME)
-          setActiveMode(DEFAULT_THEME)
-        } else {
-          setActiveMode(theme)
-        }
-      } catch (error) {
-        console.log('error: ', error)
-      }
-    }
-    initializedThemeStorage()
-  })
 
   return (
     <React.Fragment>
       <Helmet
         link={[{ rel: 'shortcut icon', type: 'image/png', href: `${favicon}` }]}
       />
-      <Theme mode={activeMode === null ? DEFAULT_THEME : activeMode}>
+      <Theme mode={activeMode}>
         <ModalMobileMenu
           display={displayMobileMenu}
           onClose={() => setDisplayMobileMenu(!displayMobileMenu)}
@@ -347,7 +323,7 @@ const Layout = ({ mode, children }) => {
 }
 
 Layout.defaultProps = {
-  mode: null,
+  mode: DEFAULT_THEME,
 }
 
 Layout.propTypes = {

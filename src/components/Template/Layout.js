@@ -261,7 +261,7 @@ const FooterStyles = styled.div`
   }
 `
 
-const Layout = ({ theme, children }) => {
+const Layout = ({ is404, theme, children }) => {
   const themeContext = useContext(ThemeManagerContext)
   const [displayMobileMenu, setDisplayMobileMenu] = useState(false)
 
@@ -271,52 +271,60 @@ const Layout = ({ theme, children }) => {
         link={[{ rel: 'shortcut icon', type: 'image/png', href: `${favicon}` }]}
       />
       <Theme mode={theme.isDark ? DARK_THEME : LIGHT_THEME}>
-        <ModalMobileMenu
-          display={displayMobileMenu}
-          onClose={() => setDisplayMobileMenu(!displayMobileMenu)}
-        />
-        <Header>
-          <div className="container">
-            <div className="columns">
-              <div className="column is-full">
-                <div className="base">
-                  <GatsbyLink to="/" className="brand">
-                    <Logo className="Logo__Medium" size="medium" />
-                    <Logo className="Logo__Large" size="large" />
-                  </GatsbyLink>
-                  <MenuStyles>
-                    <Toggler
-                      onChange={value => {
-                        themeContext.toggleDark(value)
-                      }}
-                      isDarkMode={theme.isDark}
-                    />
-                    <BurgerMenu
-                      onClick={() => setDisplayMobileMenu(!displayMobileMenu)}
-                    />
-                  </MenuStyles>
+        {is404 ? (
+          <React.Fragment>{children}</React.Fragment>
+        ) : (
+          <React.Fragment>
+            <ModalMobileMenu
+              display={displayMobileMenu}
+              onClose={() => setDisplayMobileMenu(!displayMobileMenu)}
+            />
+            <Header>
+              <div className="container">
+                <div className="columns">
+                  <div className="column is-full">
+                    <div className="base">
+                      <GatsbyLink to="/" className="brand">
+                        <Logo className="Logo__Medium" size="medium" />
+                        <Logo className="Logo__Large" size="large" />
+                      </GatsbyLink>
+                      <MenuStyles>
+                        <Toggler
+                          onChange={value => {
+                            themeContext.toggleDark(value)
+                          }}
+                          isDarkMode={theme.isDark}
+                        />
+                        <BurgerMenu
+                          onClick={() =>
+                            setDisplayMobileMenu(!displayMobileMenu)
+                          }
+                        />
+                      </MenuStyles>
+                    </div>
+                    <DesktopMenuStyles>
+                      <DesktopMenuLink to="/" activeClassName="active">
+                        home
+                      </DesktopMenuLink>
+                      <span></span>
+                      <DesktopMenuLink to="/about/" activeClassName="active">
+                        about
+                      </DesktopMenuLink>
+                    </DesktopMenuStyles>
+                  </div>
                 </div>
-                <DesktopMenuStyles>
-                  <DesktopMenuLink to="/" activeClassName="active">
-                    home
-                  </DesktopMenuLink>
-                  <span></span>
-                  <DesktopMenuLink to="/about/" activeClassName="active">
-                    about
-                  </DesktopMenuLink>
-                </DesktopMenuStyles>
+              </div>
+            </Header>
+            <div className="container">
+              <div className="columns">
+                <div className="column is-full">
+                  <ContentStyles>{children}</ContentStyles>
+                </div>
               </div>
             </div>
-          </div>
-        </Header>
-        <div className="container">
-          <div className="columns">
-            <div className="column is-full">
-              <ContentStyles>{children}</ContentStyles>
-            </div>
-          </div>
-        </div>
-        <FooterStyles>All Rights Reserved</FooterStyles>
+            <FooterStyles>All Rights Reserved</FooterStyles>
+          </React.Fragment>
+        )}
       </Theme>
     </React.Fragment>
   )
@@ -324,10 +332,12 @@ const Layout = ({ theme, children }) => {
 
 Layout.defaultProps = {
   mode: DEFAULT_THEME,
+  is404: false,
 }
 
 Layout.propTypes = {
   mode: PropTypes.oneOf([LIGHT_THEME, DARK_THEME]).isRequired,
+  is404: PropTypes.bool.isRequired,
 }
 
 export default withTheme(Layout)

@@ -2,14 +2,11 @@ import React from 'react'
 import { ThemeProvider, createGlobalStyle } from 'styled-components'
 import theme from '../../global/theme'
 import {
-  white,
   black,
   lightGray,
-  darkGray,
-  primaryBrand,
   secondaryBrand,
-  primaryAccent,
 } from '../../components/Branding/Colors'
+import './styles.scss'
 
 const GlobalStyle = createGlobalStyle`
   html {

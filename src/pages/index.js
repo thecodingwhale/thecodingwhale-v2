@@ -4,7 +4,6 @@ import Helmet from 'react-helmet'
 import Layout from '../components/Template/Layout'
 import ArticleList from '../components/ArticleList/ArticleList'
 import ArticleDashedLine from '../components/ArticleDashedLine/ArticleDashedLine'
-import './styles.scss'
 
 class RootIndex extends React.Component {
   render() {
